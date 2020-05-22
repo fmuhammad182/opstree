@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: wishtree
-          image: fmuhammad1824/wishtree:latest
+          image: fmuhammad1824/wishtree:$BUILD_NUMBER
           ports:
             - containerPort:  9090
               protocol: TCP
