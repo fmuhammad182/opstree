@@ -13,7 +13,7 @@ node{
     
     
     stage('Build Docker Image'){
-        sh 'docker build -t fmuhammad1824/wishtree .'
+        sh 'docker build -t fmuhammad1824/wishtree:"$BUILD_NUMBER" .'
     }
     
     stage('Publish DockerHub'){
@@ -23,14 +23,22 @@ node{
 
             sh 'docker push fmuhammad1824/wishtree' **/
             sh 'docker login -u fmuhammad1824 -p techugo@1123'
-            sh 'docker push fmuhammad1824/wishtree'
+            sh 'docker push fmuhammad1824/wishtree:"$BUILD_NUMBER"'
         }
      
      stage("Deploy To Kuberates Cluster"){
-       kubernetesDeploy(
-         configs: 'springBootMongo.yml', 
-         kubeconfigId: 'KUBERNATES_CONFIG',
-         enableConfigSubstitution: true
+  //    sh 'kubectl apply -f hpa.yml'
+      sh 'export BUILD_NUMBER="$BUILD_NUMBER"'
+      sh 'envsubst < deployment.yml | kubectl apply -f - '
+      sh '''
+      if ! kubectl rollout status deployment wishtree; then
+         kubectl rollout undo deployment wishtree
+         kubectl rollout status deployment wishtree
+         exit 1
+      fi
+      '''
+  //    sh 'kubectl apply -f deployment.yml'
+      sh 'kubectl apply -f service.yml'
         )
      }
 }
