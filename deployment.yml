@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishtree
+  labels:
+    app: wishtree
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  revisionHistoryLimit: 2
+  paused: false
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: wishtree
+  template:
+    metadata:
+      name: wishtree
+      labels:
+        app: wishtree
+    spec:
+      containers:
+        - name: wishtree
+          image: fmuhammad1824/wishtree:latest
+          ports:
+            - containerPort:  9090
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "500Mi"
+            requests:
+              cpu: "100m"
+              memory: "200Mi"
+
