@@ -37,8 +37,8 @@ node{
          exit 1
       fi
       '''
-  //    sh 'kubectl apply -f deployment.yml'
+ 
       sh 'kubectl apply -f service.yml'
-        )
+        
      }
 }
