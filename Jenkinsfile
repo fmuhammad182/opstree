@@ -1,7 +1,7 @@
 node{
      
     stage('SCM Checkout'){
-        git url:  'https://github.com/fmuhammad182/wishtree.git',branch: 'master'
+        git url:  'https://github.com/fmuhammad182/opstree.git',branch: 'master'
     }
     
     stage(" Maven Clean Package"){
