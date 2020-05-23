@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wishtree
+  name: opstree
 spec:
   selector:
-    app: wishtree
+    app: opstree
   ports:
     - port: 9090
       targetPort: 8080
