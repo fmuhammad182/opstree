@@ -27,13 +27,13 @@ node{
         }
      
      stage("Deploy To Kuberates Cluster"){
-  //    sh 'kubectl apply -f hpa.yml'
+      sh 'kubectl apply -f hpa.yml'
       sh 'export BUILD_NUMBER="$BUILD_NUMBER"'
       sh 'envsubst < deployment.yml | kubectl apply -f - '
       sh '''
-      if ! kubectl rollout status deployment wishtree; then
-         kubectl rollout undo deployment wishtree
-         kubectl rollout status deployment wishtree
+      if ! kubectl rollout status deployment opstree; then
+         kubectl rollout undo deployment opstree
+         kubectl rollout status deployment opstree
          exit 1
       fi
       '''
