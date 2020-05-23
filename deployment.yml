@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wishtree
+  name: opstree
   labels:
-    app: wishtree
+    app: opstree
 spec:
   replicas: 2
   strategy:
@@ -16,15 +16,15 @@ spec:
   minReadySeconds: 10
   selector:
     matchLabels:
-      app: wishtree
+      app: opstree
   template:
     metadata:
-      name: wishtree
+      name: opstree
       labels:
-        app: wishtree
+        app: opstree
     spec:
       containers:
-        - name: wishtree
+        - name: opstree
           image: fmuhammad1824/wishtree:$BUILD_NUMBER
           ports:
             - containerPort:  9090
