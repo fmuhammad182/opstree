@@ -1,0 +1,33 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: opstree-cpu-hpa
+spec:
+  minReplicas: 2
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 90
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: opstree
+    
+    
+---
+
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: opstree-memory-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: opstree
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 500
